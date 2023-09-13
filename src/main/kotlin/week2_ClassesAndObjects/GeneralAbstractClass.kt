@@ -32,3 +32,22 @@ class B : A() {
         println("Hello")
     }
 }
+
+val xpto = 25L
+
+val xoiso = 20.0
+
+open class Parent {
+    protected fun xpto()=println("xpto")
+}
+
+class Child:Parent() {
+    fun childXpto() {
+        xpto()
+    }
+}
+
+fun xptofun() {
+    //Child().xpto()//can't call directly the parent protected function
+    Child().childXpto()
+}
