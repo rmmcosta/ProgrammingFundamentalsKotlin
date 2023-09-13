@@ -14,6 +14,15 @@ fun showMenu() {
     println("Choose an option (1, 2 or 3)")
 }
 
+fun showAccountMenu() {
+    println("What would you like to do?")
+    println("1.Check bank account balance")
+    println("2.Withdraw money")
+    println("3.Deposit money")
+    println("4.Close the app")
+    println("Which option do you choose? (1, 2, 3 or 4)")
+}
+
 fun withdraw(amount: Int): Int {
     accountBalance -= amount
     println("You successfully withdrew $amount dollars.")
@@ -61,7 +70,6 @@ fun creditDeposit(amount: Int): Int =
         }
     }
 
-
 fun main() {
     showMenu()
     var userChoice = 0
@@ -90,4 +98,55 @@ fun main() {
     println("The amount you deposited is $output dollars.")
     output = creditDeposit(money)
     println("The amount you deposited is $output dollars.")
+
+    fun transfer(mode: String) {
+        val transferAmount: Int = when (mode) {
+            "withdraw" -> {
+                if (accountType == "debit") {
+                    debitWithdraw(money)
+                } else {
+                    withdraw(money)
+                }
+            }
+
+            "deposit" -> {
+                if (accountType == "credit") {
+                    creditDeposit(money)
+                } else {
+                    deposit(money)
+                }
+            }
+
+            else -> return
+        }
+        println("The amount you $mode is $transferAmount dollars.")
+    }
+
+    var isSystemOpen = true
+    while (isSystemOpen) {
+        showAccountMenu()
+        val option = (1..5).random()
+        println("You selected the option $option")
+        when (option) {
+            1 -> {
+                println("The current balance is $accountBalance dollars.")
+            }
+
+            2 -> {
+                transfer("withdraw")
+            }
+
+            3 -> {
+                transfer("deposit")
+            }
+
+            4 -> {
+                isSystemOpen = false
+                println("The System is closed")
+            }
+
+            else -> continue
+
+        }
+    }
 }
